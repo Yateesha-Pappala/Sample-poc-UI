@@ -1,0 +1,13 @@
+/* Global stylesheet — the only entry in angular.json > styles.
+   ---------------------------------------------------------------------------
+   styles/theme.css       Tailwind import, design tokens, dark variant, base resets.
+                          Shared design layer — kept in sync with the portal via
+                          `git subtree`. DO NOT hand-edit. See docs/DESIGN-LAYER.md.
+   styles/_branding.css   Per-project brand overrides (colours, radius). EDIT THIS
+                          to rebrand — it re-declares tokens from theme.css.
+   styles/components.css  The .sui-* component layer. Shared, subtree-managed. DO NOT
+                          hand-edit. Class reference in styles/README.md.
+   --------------------------------------------------------------------------- */
+@import './styles/theme.css';
+@import './styles/_branding.css';
+@import './styles/components.css';

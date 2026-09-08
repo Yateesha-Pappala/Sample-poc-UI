@@ -1,0 +1,75 @@
+@if (points().length === 0) {
+  <p class="py-10 text-center text-sm text-gray-500 dark:text-gray-400">{{ emptyMessage() }}</p>
+} @else {
+  <div class="relative text-brand-700 dark:text-brand-accent">
+    <svg
+      [attr.viewBox]="'0 0 ' + width + ' ' + height"
+      class="w-full"
+      (mousemove)="onMouseMove($event)"
+      (mouseleave)="onMouseLeave()"
+    >
+      <defs>
+        <linearGradient id="line-chart-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="currentColor" stop-opacity="0.22" />
+          <stop offset="100%" stop-color="currentColor" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+
+      <line
+        x1="0"
+        [attr.y1]="baselineY"
+        [attr.x2]="width"
+        [attr.y2]="baselineY"
+        stroke="currentColor"
+        stroke-opacity="0.15"
+        stroke-width="1"
+      />
+
+      <path [attr.d]="areaPath()" fill="url(#line-chart-fill)" />
+      <path
+        [attr.d]="linePath()"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+
+      @if (hoverPoint(); as hover) {
+        <line
+          [attr.x1]="hover.x"
+          y1="10"
+          [attr.x2]="hover.x"
+          [attr.y2]="baselineY"
+          stroke="currentColor"
+          stroke-opacity="0.3"
+          stroke-width="1"
+        />
+        <circle [attr.cx]="hover.x" [attr.cy]="hover.y" r="3.5" fill="currentColor" />
+      }
+
+      @for (label of axisLabels(); track label.label) {
+        <text
+          [attr.x]="label.x"
+          [attr.y]="height - 6"
+          font-size="9"
+          fill="currentColor"
+          fill-opacity="0.55"
+          text-anchor="middle"
+        >
+          {{ label.label }}
+        </text>
+      }
+    </svg>
+
+    @if (hoverPoint(); as hover) {
+      <div
+        class="pointer-events-none absolute -translate-x-1/2 -translate-y-[110%] rounded-md bg-slate-900 px-2.5 py-1.5 text-xs whitespace-nowrap text-white dark:bg-black"
+        [style.left.%]="(hover.x / width) * 100"
+        [style.top.%]="(hover.y / height) * 100"
+      >
+        {{ hover.label }} · {{ valueFormat()(hover.value) }}
+      </div>
+    }
+  </div>
+}

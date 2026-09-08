@@ -1,0 +1,150 @@
+<app-auth-navbar />
+
+<main class="flex flex-1 items-center justify-center p-6">
+  <section
+    class="w-full max-w-2xl rounded-xl bg-white p-8 shadow-sm dark:bg-brand-dark-panel"
+    aria-labelledby="register-heading"
+  >
+    @if (!done()) {
+      <h1
+        id="register-heading"
+        class="mb-6 border-b border-gray-200 pb-4 text-center text-xl font-bold text-slate-900 dark:border-white/10 dark:text-white"
+      >
+        Create your account
+      </h1>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+          <div>
+            <label for="firstName" class="sui-label mb-1.5">First name</label>
+            <input
+              id="firstName"
+              type="text"
+              class="sui-input sui-input--lg"
+              formControlName="firstName"
+              autocomplete="given-name"
+              [attr.aria-invalid]="errorFor('firstName') ? true : null"
+            />
+            @if (errorFor('firstName'); as m) {
+              <p class="sui-error" role="alert">{{ m }}</p>
+            }
+          </div>
+          <div>
+            <label for="lastName" class="sui-label mb-1.5">Last name</label>
+            <input
+              id="lastName"
+              type="text"
+              class="sui-input sui-input--lg"
+              formControlName="lastName"
+              autocomplete="family-name"
+              [attr.aria-invalid]="errorFor('lastName') ? true : null"
+            />
+            @if (errorFor('lastName'); as m) {
+              <p class="sui-error" role="alert">{{ m }}</p>
+            }
+          </div>
+          <div>
+            <label for="company" class="sui-label mb-1.5">Company</label>
+            <input
+              id="company"
+              type="text"
+              class="sui-input sui-input--lg"
+              formControlName="company"
+              autocomplete="organization"
+              [attr.aria-invalid]="errorFor('company') ? true : null"
+            />
+            @if (errorFor('company'); as m) {
+              <p class="sui-error" role="alert">{{ m }}</p>
+            }
+          </div>
+          <div>
+            <label for="jobTitle" class="sui-label mb-1.5"
+              >Job title <span class="font-normal text-gray-400">(optional)</span></label
+            >
+            <input
+              id="jobTitle"
+              type="text"
+              class="sui-input sui-input--lg"
+              formControlName="jobTitle"
+              autocomplete="organization-title"
+            />
+          </div>
+          <div>
+            <label for="country" class="sui-label mb-1.5">Country</label>
+            <select
+              id="country"
+              class="sui-select sui-input--lg"
+              formControlName="country"
+              [attr.aria-invalid]="errorFor('country') ? true : null"
+            >
+              <option value="" disabled>Select a country</option>
+              @for (country of countries; track country) {
+                <option [value]="country">{{ country }}</option>
+              }
+            </select>
+            @if (errorFor('country'); as m) {
+              <p class="sui-error" role="alert">{{ m }}</p>
+            }
+          </div>
+          <div>
+            <label for="email" class="sui-label mb-1.5">Work email</label>
+            <input
+              id="email"
+              type="email"
+              class="sui-input sui-input--lg"
+              formControlName="email"
+              placeholder="you@company.com"
+              autocomplete="email"
+              [attr.aria-invalid]="errorFor('email') ? true : null"
+            />
+            @if (errorFor('email'); as m) {
+              <p class="sui-error" role="alert">{{ m }}</p>
+            }
+          </div>
+        </div>
+
+        <button type="submit" class="sui-btn sui-btn--primary sui-btn--lg sui-btn--block mt-6">
+          Create account
+        </button>
+      </form>
+
+      <p class="mt-4 text-center text-[13px] text-gray-500 dark:text-gray-400">
+        Already have an account?
+        <a
+          routerLink="/login"
+          class="font-medium text-brand-700 hover:underline dark:text-brand-accent"
+          >Sign in</a
+        >
+      </p>
+    } @else {
+      <div class="py-6 text-center">
+        <div
+          class="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-400"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold text-slate-900 dark:text-white">Check your email</h1>
+        <p class="mx-auto mt-2 max-w-sm text-sm text-gray-500 dark:text-gray-400">
+          We’ve sent a confirmation link to
+          <span class="font-medium text-slate-900 dark:text-white">{{
+            form.controls.email.value
+          }}</span
+          >.
+        </p>
+        <a routerLink="/login" class="sui-btn sui-btn--outline mt-6 inline-flex">Back to sign in</a>
+      </div>
+    }
+  </section>
+</main>

@@ -1,0 +1,23 @@
+<dialog
+  #dialogEl
+  (click)="onDialogClick($event)"
+  (close)="onDialogClose()"
+  class="sui-dialog w-full max-w-sm"
+>
+  <div class="sui-dialog-body">
+    <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ message() }}</p>
+  </div>
+
+  <div class="sui-dialog-footer">
+    <button #cancelButtonEl type="button" (click)="onCancel()" class="sui-btn sui-btn--ghost">
+      {{ cancelLabel() }}
+    </button>
+    <button
+      type="button"
+      (click)="onConfirm()"
+      [class]="tone() === 'danger' ? 'sui-btn sui-btn--danger' : 'sui-btn sui-btn--primary'"
+    >
+      {{ confirmLabel() }}
+    </button>
+  </div>
+</dialog>

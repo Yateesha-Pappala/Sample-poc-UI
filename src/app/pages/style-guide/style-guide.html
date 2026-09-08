@@ -1,0 +1,246 @@
+<div class="mb-10">
+  <p class="text-xs font-semibold uppercase tracking-wide text-brand-700 dark:text-brand-accent">
+    Reference
+  </p>
+  <h1 class="mt-1.5 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+    Components &amp; styles
+  </h1>
+  <p class="mt-1.5 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+    Every <code class="rounded bg-gray-100 px-1 py-0.5 text-xs dark:bg-white/10">.sui-*</code> class
+    and shared component, in both themes. Use the theme toggle in the header to check dark mode.
+  </p>
+</div>
+
+<div class="space-y-12">
+  <!-- Buttons -->
+  <section aria-labelledby="sg-buttons">
+    <h2
+      id="sg-buttons"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Buttons
+    </h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <button class="sui-btn sui-btn--primary">Primary</button>
+      <button class="sui-btn sui-btn--danger">Danger</button>
+      <button class="sui-btn sui-btn--outline">Outline</button>
+      <button class="sui-btn sui-btn--neutral">Neutral</button>
+      <button class="sui-btn sui-btn--ghost">Ghost</button>
+      <button class="sui-btn sui-btn--primary" disabled>Disabled</button>
+    </div>
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+      <button class="sui-btn sui-btn--primary sui-btn--sm">Small</button>
+      <button class="sui-btn sui-btn--primary">Base</button>
+      <button class="sui-btn sui-btn--primary sui-btn--lg">Large</button>
+    </div>
+  </section>
+
+  <!-- Form controls -->
+  <section aria-labelledby="sg-forms">
+    <h2
+      id="sg-forms"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Form controls
+    </h2>
+    <div class="grid max-w-2xl gap-4 sm:grid-cols-2">
+      <div>
+        <label for="sg-text" class="sui-label">Text input</label>
+        <input id="sg-text" class="sui-input" placeholder="Placeholder" />
+        <p class="sui-hint">Helper text.</p>
+      </div>
+      <div>
+        <label for="sg-select" class="sui-label">Select</label>
+        <select id="sg-select" class="sui-select">
+          <option>One</option>
+          <option>Two</option>
+        </select>
+      </div>
+      <div>
+        <label for="sg-invalid" class="sui-label">Invalid</label>
+        <input id="sg-invalid" class="sui-input" aria-invalid="true" value="Not quite right" />
+        <p class="sui-error">This value is invalid.</p>
+      </div>
+      <div>
+        <label for="sg-textarea" class="sui-label">Textarea</label>
+        <textarea
+          id="sg-textarea"
+          rows="2"
+          class="sui-textarea"
+          placeholder="Longer text…"
+        ></textarea>
+      </div>
+    </div>
+    <div class="mt-4 max-w-sm">
+      <app-search-input [(value)]="search" placeholder="Search input…" />
+    </div>
+  </section>
+
+  <!-- Selection controls -->
+  <section aria-labelledby="sg-selection">
+    <h2
+      id="sg-selection"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Selection
+    </h2>
+    <div class="flex flex-wrap items-center gap-6">
+      <app-segmented-control [options]="segmentOptions" [(value)]="segment" />
+      <app-filter-chips [chips]="chips" [(value)]="chip" />
+      <div class="flex items-center gap-2">
+        <app-toggle-switch [(checked)]="switch1" label="One" />
+        <app-toggle-switch [(checked)]="switch2" label="Two" />
+      </div>
+    </div>
+    <div class="mt-6 space-y-4">
+      <app-tab-bar [tabs]="tabs" [(active)]="tab" variant="underline" />
+      <app-tab-bar [tabs]="tabs" [(active)]="tab" variant="pill" />
+    </div>
+    <div class="mt-6 max-w-sm">
+      <label class="sui-label">Combobox</label>
+      <app-combobox [options]="comboOptions" />
+    </div>
+  </section>
+
+  <!-- Badges -->
+  <section aria-labelledby="sg-badges">
+    <h2
+      id="sg-badges"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Badges
+    </h2>
+    <div class="flex flex-wrap gap-2">
+      @for (tone of badges; track tone) {
+        <span class="sui-badge" [class]="'sui-badge--' + tone">{{ tone }}</span>
+      }
+    </div>
+  </section>
+
+  <!-- Cards & surfaces -->
+  <section aria-labelledby="sg-cards">
+    <h2
+      id="sg-cards"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Surfaces
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="sui-card p-5">
+        <h3 class="font-semibold text-slate-900 dark:text-white">Card</h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <code>.sui-card</code> — border, radius, surface.
+        </p>
+      </div>
+      <app-stat-tile icon="clock" label="Stat tile" value="12h 40m" sub="Last 30 days" />
+      <div class="sui-card flex items-center justify-center p-5 text-sm text-gray-400">
+        icon buttons →
+        <button class="sui-icon-btn ml-2"><app-icon name="edit" [size]="16" /></button>
+        <button class="sui-icon-btn sui-icon-btn--danger">
+          <app-icon name="trash" [size]="16" />
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data display -->
+  <section aria-labelledby="sg-data">
+    <h2
+      id="sg-data"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Data display
+    </h2>
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="sui-card p-5">
+        <h3 class="mb-3 font-semibold text-slate-900 dark:text-white">Line chart</h3>
+        <app-line-chart [points]="series" />
+      </div>
+      <div>
+        <h3 class="mb-3 font-semibold text-slate-900 dark:text-white">Bar list</h3>
+        <app-bar-list
+          [items]="[
+            { label: 'Alpha', value: 90, valueLabel: '90' },
+            { label: 'Bravo', value: 60, valueLabel: '60' },
+            { label: 'Charlie', value: 30, valueLabel: '30' },
+          ]"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- States -->
+  <section aria-labelledby="sg-states">
+    <h2
+      id="sg-states"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      States
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <app-empty-state
+        icon="search"
+        title="Nothing here"
+        message="An empty-state panel with an optional action."
+      />
+      <app-error-state message="Something went wrong loading this section." [canRetry]="true" />
+    </div>
+  </section>
+
+  <!-- Overlays -->
+  <section aria-labelledby="sg-overlays">
+    <h2
+      id="sg-overlays"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Overlays
+    </h2>
+    <div class="flex flex-wrap gap-3">
+      <button class="sui-btn sui-btn--outline" (click)="confirmOpen.set(true)">
+        Open confirm dialog
+      </button>
+      <button class="sui-btn sui-btn--outline" (click)="dialogOpen.set(true)">
+        Open form dialog
+      </button>
+    </div>
+  </section>
+
+  <!-- Icons -->
+  <section aria-labelledby="sg-icons">
+    <h2
+      id="sg-icons"
+      class="mb-4 text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+    >
+      Icons
+    </h2>
+    <div class="flex flex-wrap gap-4 text-gray-600 dark:text-gray-300">
+      @for (name of iconNames; track name) {
+        <span class="flex w-16 flex-col items-center gap-1.5 text-center">
+          <app-icon [name]="name" [size]="20" />
+          <span class="text-[10px] text-gray-400">{{ name }}</span>
+        </span>
+      }
+    </div>
+  </section>
+</div>
+
+@if (confirmOpen()) {
+  <app-confirm-dialog
+    message="This is a confirm dialog. Confirm or cancel."
+    confirmLabel="Confirm"
+    (confirmed)="confirmOpen.set(false)"
+    (cancelled)="confirmOpen.set(false)"
+  />
+}
+
+@if (dialogOpen()) {
+  <app-form-dialog
+    title="Form dialog"
+    confirmLabel="Save"
+    (confirmed)="dialogOpen.set(false)"
+    (closed)="dialogOpen.set(false)"
+  >
+    <label for="sg-dialog-input" class="sui-label">A field</label>
+    <input id="sg-dialog-input" class="sui-input" placeholder="Type something" />
+  </app-form-dialog>
+}

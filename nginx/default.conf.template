@@ -1,0 +1,33 @@
+server {
+    listen       ${PORT};
+    listen       [::]:${PORT};
+    server_name  _;
+    root         /usr/share/nginx/html;
+    index        index.html;
+
+    # SPA: unknown paths fall back to the app shell so client-side routing works.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Hashed build assets are immutable — cache them hard.
+    location ~* \.(?:js|css|woff2?|ttf|eot|svg|png|jpe?g|gif|ico|webp)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # index.html must never be cached, or clients pin an old bundle.
+    location = /index.html {
+        add_header Cache-Control "no-cache";
+    }
+
+    # This app is designed to be embeddable in a parent portal via <iframe>.
+    # Do NOT add `X-Frame-Options: DENY` or a restrictive frame-ancestors CSP.
+    # If you add a CSP, allow the portal origin, e.g.:
+    #   add_header Content-Security-Policy "frame-ancestors 'self' https://portal.example.com";
+
+    gzip              on;
+    gzip_types        text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length   1024;
+}

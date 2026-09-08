@@ -1,0 +1,73 @@
+<div class="mx-auto max-w-2xl">
+  <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Settings</h1>
+  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+    Preferences for this device and account.
+  </p>
+
+  <section class="sui-card mt-6 p-5">
+    <h2 class="text-sm font-semibold text-slate-900 dark:text-white">Appearance</h2>
+    <div class="mt-3 flex items-center justify-between gap-4">
+      <div>
+        <p class="text-sm font-medium text-slate-700 dark:text-gray-200">Theme</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Stored on this device.</p>
+      </div>
+      <app-segmented-control
+        [options]="themeOptions"
+        [value]="theme.current()"
+        (valueChange)="theme.set($event)"
+        ariaLabel="Theme"
+      />
+    </div>
+  </section>
+
+  <section class="sui-card mt-6 divide-y divide-gray-200 p-5 dark:divide-white/10">
+    <h2 class="pb-3 text-sm font-semibold text-slate-900 dark:text-white">Notifications</h2>
+    <div class="flex items-center justify-between gap-4 py-3.5">
+      <div>
+        <p class="text-sm font-medium text-slate-700 dark:text-gray-200">Product updates</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">New features and improvements.</p>
+      </div>
+      <app-toggle-switch [(checked)]="notifyProduct" label="Product updates" />
+    </div>
+    <div class="flex items-center justify-between gap-4 py-3.5">
+      <div>
+        <p class="text-sm font-medium text-slate-700 dark:text-gray-200">Weekly digest</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">A summary every Monday.</p>
+      </div>
+      <app-toggle-switch [(checked)]="notifyWeekly" label="Weekly digest" />
+    </div>
+    <div class="flex items-center justify-between gap-4 py-3.5">
+      <div>
+        <p class="text-sm font-medium text-slate-700 dark:text-gray-200">Mentions</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">When someone @-mentions you.</p>
+      </div>
+      <app-toggle-switch [(checked)]="notifyMentions" label="Mentions" />
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-xl border border-red-200 p-5 dark:border-red-500/30">
+    <h2 class="text-sm font-semibold text-red-700 dark:text-red-400">Danger zone</h2>
+    <div class="mt-3 flex items-center justify-between gap-4">
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Delete your account and all associated data.
+      </p>
+      <button
+        type="button"
+        class="sui-btn sui-btn--danger shrink-0"
+        (click)="confirmDelete.set(true)"
+      >
+        Delete account
+      </button>
+    </div>
+  </section>
+</div>
+
+@if (confirmDelete()) {
+  <app-confirm-dialog
+    message="Delete your account? This cannot be undone."
+    confirmLabel="Delete account"
+    tone="danger"
+    (confirmed)="confirmDelete.set(false)"
+    (cancelled)="confirmDelete.set(false)"
+  />
+}

@@ -1,0 +1,111 @@
+<app-auth-navbar />
+
+<main class="flex flex-1 items-center justify-center p-6">
+  <section
+    class="w-full max-w-sm rounded-xl bg-white p-8 shadow-sm dark:bg-brand-dark-panel"
+    aria-labelledby="login-heading"
+  >
+    @if (!codeSent()) {
+      <h1
+        id="login-heading"
+        class="mb-6 text-center text-2xl font-bold text-slate-900 dark:text-white"
+      >
+        Sign in
+      </h1>
+
+      <form [formGroup]="form" (ngSubmit)="sendCode()" novalidate>
+        <div class="mb-5">
+          <label for="email" class="sui-label mb-1.5">Email address</label>
+          <input
+            id="email"
+            type="email"
+            class="sui-input sui-input--lg"
+            formControlName="email"
+            placeholder="you@company.com"
+            autocomplete="email"
+            [attr.aria-invalid]="emailError() ? true : null"
+            [attr.aria-describedby]="emailError() ? 'email-error' : null"
+          />
+          @if (emailError(); as message) {
+            <p id="email-error" class="sui-error" role="alert">{{ message }}</p>
+          }
+        </div>
+
+        <button type="submit" class="sui-btn sui-btn--primary sui-btn--lg sui-btn--block">
+          Send login code
+        </button>
+      </form>
+
+      <p class="mt-4 text-center text-[13px] text-gray-500 dark:text-gray-400">
+        Don't have an account?
+        <a
+          routerLink="/register"
+          class="font-medium text-brand-700 hover:underline dark:text-brand-accent"
+          >Register</a
+        >
+      </p>
+    } @else {
+      <h1 class="mb-3 text-center text-2xl font-bold text-slate-900 dark:text-white">
+        Check your email
+      </h1>
+      <p class="text-center text-[13px] text-gray-500 dark:text-gray-400">
+        Enter the 6-digit code we sent to
+      </p>
+      <p class="mb-6 text-center text-sm font-medium break-all text-slate-900 dark:text-white">
+        {{ form.controls.email.value }}
+      </p>
+
+      <div class="mb-5">
+        <app-otp-input
+          [(value)]="code"
+          [length]="6"
+          [invalid]="!!codeError()"
+          (completed)="verify($event)"
+        />
+      </div>
+
+      @if (codeError(); as message) {
+        <p class="mb-4 text-center text-[13px] text-red-600 dark:text-red-400" role="alert">
+          {{ message }}
+        </p>
+      }
+
+      <button
+        type="button"
+        class="sui-btn sui-btn--primary sui-btn--lg sui-btn--block"
+        (click)="verify(code())"
+      >
+        Verify
+      </button>
+
+      <p class="mt-3 text-center text-[12px] text-gray-400 dark:text-gray-500">
+        Demo: any 6 digits will sign you in.
+      </p>
+
+      <div
+        class="mt-4 flex items-center justify-center gap-3 border-t border-gray-200 pt-5 text-[13px] dark:border-white/10"
+      >
+        <button
+          type="button"
+          class="font-medium text-slate-600 underline hover:text-brand-700 disabled:cursor-not-allowed disabled:text-slate-300 disabled:no-underline dark:text-gray-400 dark:hover:text-brand-accent dark:disabled:text-gray-600"
+          [disabled]="resendCooldown() > 0"
+          (click)="resend()"
+        >
+          @if (resendCooldown() > 0) {
+            Resend code in {{ resendCooldown() }}s
+          } @else {
+            Resend code
+          }
+        </button>
+        <span class="text-gray-300 dark:text-white/20" aria-hidden="true">|</span>
+        <button
+          type="button"
+          class="font-medium text-slate-600 underline hover:text-brand-700 dark:text-gray-400 dark:hover:text-brand-accent"
+          (click)="changeEmail()"
+        >
+          Change email
+        </button>
+      </div>
+    }
+  </section>
+</main>
