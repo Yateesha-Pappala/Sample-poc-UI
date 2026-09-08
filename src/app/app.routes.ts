@@ -1,15 +1,14 @@
 import { Routes } from '@angular/router';
 
-import { adminGuard, authGuard } from './core/auth/auth-guard';
+import { authGuard } from './core/auth/auth-guard';
 
 /**
- * Route table for the template's example pages.
+ * Route table.
  *
  * - The authenticated area is nested under `AppShell` (header + tab nav).
  * - `login` / `register` render standalone with their own auth navbar.
- * - `detail/:id` renders standalone with a slim back-link header.
  *
- * Add your project's pages the same way. Keep feature routes lazy
+ * Add feature pages as lazy child routes of the shell
  * (`loadComponent` / `loadChildren`).
  */
 export const routes: Routes = [
@@ -24,14 +23,8 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
       },
       {
-        path: 'data',
-        loadComponent: () =>
-          import('./pages/data-table-page/data-table-page').then((m) => m.DataTablePage),
-      },
-      {
-        path: 'analytics',
-        canActivate: [adminGuard],
-        loadComponent: () => import('./pages/analytics/analytics').then((m) => m.Analytics),
+        path: 'employees',
+        loadComponent: () => import('./pages/employees/employees').then((m) => m.Employees),
       },
       {
         path: 'profile',
@@ -41,17 +34,7 @@ export const routes: Routes = [
         path: 'settings',
         loadComponent: () => import('./pages/settings/settings').then((m) => m.Settings),
       },
-      {
-        path: 'components',
-        loadComponent: () => import('./pages/style-guide/style-guide').then((m) => m.StyleGuide),
-      },
     ],
-  },
-
-  {
-    path: 'detail/:id',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/detail/detail').then((m) => m.Detail),
   },
 
   {

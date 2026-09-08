@@ -8,7 +8,10 @@ import { AppShell } from './app-shell';
 describe('AppShell', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideRouter([]), { provide: APP_CONFIG, useValue: DEFAULT_APP_CONFIG }],
+      providers: [
+        provideRouter([{ path: 'login', children: [] }]),
+        { provide: APP_CONFIG, useValue: DEFAULT_APP_CONFIG },
+      ],
     });
   });
 

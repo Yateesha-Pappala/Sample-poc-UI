@@ -9,7 +9,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Sails Software brand palette, taken from the official logo assets. */
+  /* Default brand palette. Override the hex values in styles/_branding.css. */
   --color-brand-50: #eaf4fb;
   --color-brand-100: #d3e7f5;
   --color-brand-300: #7fb0d6;
@@ -19,7 +19,7 @@
   --color-brand-accent-hover: #00a3e6;
   --color-brand-wave: #0c8dc6;
 
-  /* Dark theme surfaces, matching sailssoftware.com's own near-black navy. */
+  /* Dark theme surfaces — near-black navy. */
   --color-brand-dark: #0f131e;
   --color-brand-dark-panel: #141a2e;
   --color-brand-dark-panel-hover: #1b2338;

@@ -1,0 +1,162 @@
+<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Employees</h1>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      Everyone in the organisation, their team and current status.
+    </p>
+  </div>
+
+  <button type="button" class="sui-btn sui-btn--primary shrink-0" (click)="openAdd()">
+    Add Employee
+  </button>
+</div>
+
+<div class="mt-6 flex flex-wrap items-center gap-2">
+  <app-search-input
+    class="w-full sm:w-72"
+    [(value)]="search"
+    placeholder="Search name, department, role…"
+  />
+
+  @if (!error()) {
+    <a
+      routerLink="/employees"
+      [queryParams]="{ fail: 1 }"
+      class="sui-btn sui-btn--ghost sui-btn--sm ml-auto"
+    >
+      Simulate load error
+    </a>
+  }
+</div>
+
+<div class="mt-6">
+  @if (error(); as message) {
+    <app-error-state [message]="message" [canRetry]="true" (retry)="reload()" />
+  } @else {
+    <app-data-table
+      [rows]="filtered()"
+      [loading]="loading()"
+      [minWidth]="640"
+      [trackFn]="trackById"
+    >
+      <ng-container header>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Department</th>
+        <th class="px-4 py-3">Role</th>
+        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3 text-right">Details</th>
+      </ng-container>
+
+      <ng-template #body let-employee>
+        <td class="px-4 py-3 font-medium text-slate-900 dark:text-white">{{ employee.name }}</td>
+        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">{{ employee.department }}</td>
+        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">{{ employee.role }}</td>
+        <td class="px-4 py-3">
+          <span class="sui-badge" [class]="statusTone(employee.status)">{{ employee.status }}</span>
+        </td>
+        <td class="px-4 py-3 text-right">
+          <button
+            type="button"
+            class="sui-btn sui-btn--ghost sui-btn--sm"
+            (click)="selected.set(employee)"
+          >
+            View
+          </button>
+        </td>
+      </ng-template>
+
+      <ng-container empty>
+        @if (search().trim()) {
+          No employees match “{{ search().trim() }}”.
+        } @else {
+          No employees yet.
+        }
+      </ng-container>
+    </app-data-table>
+  }
+</div>
+
+@if (selected(); as employee) {
+  <app-form-dialog
+    title="Employee details"
+    [showCancel]="false"
+    confirmLabel="Close"
+    (confirmed)="selected.set(null)"
+    (closed)="selected.set(null)"
+  >
+    <dl class="grid grid-cols-[8rem_1fr] gap-x-4 gap-y-3 text-sm">
+      <dt class="font-medium text-gray-500 dark:text-gray-400">Name</dt>
+      <dd class="text-slate-900 dark:text-white">{{ employee.name }}</dd>
+
+      <dt class="font-medium text-gray-500 dark:text-gray-400">Department</dt>
+      <dd class="text-slate-900 dark:text-white">{{ employee.department }}</dd>
+
+      <dt class="font-medium text-gray-500 dark:text-gray-400">Role</dt>
+      <dd class="text-slate-900 dark:text-white">{{ employee.role }}</dd>
+
+      <dt class="font-medium text-gray-500 dark:text-gray-400">Status</dt>
+      <dd>
+        <span class="sui-badge" [class]="statusTone(employee.status)">{{ employee.status }}</span>
+      </dd>
+    </dl>
+  </app-form-dialog>
+}
+
+@if (addOpen()) {
+  <app-form-dialog
+    title="Add employee"
+    confirmLabel="Add employee"
+    (confirmed)="submitAdd()"
+    (closed)="closeAdd()"
+  >
+    <form [formGroup]="addForm" class="space-y-4">
+      <div>
+        <label for="employee-name" class="sui-label">Name</label>
+        <input
+          id="employee-name"
+          class="sui-input"
+          formControlName="name"
+          [attr.aria-invalid]="controlInvalid('name') || null"
+        />
+        @if (controlInvalid('name')) {
+          <p class="sui-error">Name is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="employee-department" class="sui-label">Department</label>
+        <input
+          id="employee-department"
+          class="sui-input"
+          formControlName="department"
+          [attr.aria-invalid]="controlInvalid('department') || null"
+        />
+        @if (controlInvalid('department')) {
+          <p class="sui-error">Department is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="employee-role" class="sui-label">Role</label>
+        <input
+          id="employee-role"
+          class="sui-input"
+          formControlName="role"
+          [attr.aria-invalid]="controlInvalid('role') || null"
+        />
+        @if (controlInvalid('role')) {
+          <p class="sui-error">Role is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="employee-status" class="sui-label">Status</label>
+        <select id="employee-status" class="sui-select" formControlName="status">
+          @for (status of statuses; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </div>
+    </form>
+  </app-form-dialog>
+}

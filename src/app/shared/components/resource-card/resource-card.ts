@@ -4,18 +4,18 @@ import { RouterLink } from '@angular/router';
 import { Icon, IconName } from '../icon/icon';
 
 /**
- * The catalog card from the portal's dashboard, generalised: hover-lift,
- * focus-within ring, an icon tile, title + description, an optional primary
- * action, and an optional "details" footer link. A `[badge]` slot sits top-left
- * and an `[actions]` slot top-right (e.g. edit / delete icon buttons).
+ * A generic catalog card: hover-lift, focus-within ring, an icon tile, title +
+ * description, an optional primary action, and an optional "details" footer
+ * link. A `[badge]` slot sits top-left and an `[actions]` slot top-right (e.g.
+ * edit / delete icon buttons).
  *
  * ```html
  * <app-resource-card
  *   icon="bolt"
- *   title="Contract Analyzer"
- *   description="Extracts key terms from uploaded contracts."
+ *   title="Item name"
+ *   description="Short summary of the item."
  *   primaryLabel="Open"
- *   [detailLink]="['/detail', item.id]"
+ *   [detailLink]="['/items', item.id]"
  *   (primaryAction)="open(item)"
  * />
  * ```

@@ -6,8 +6,8 @@
    @theme declaration, so anything set here wins over theme.css without touching
    the subtree-managed file.
 
-   The values below are the Sails Software palette (same as the portal). To make
-   the app yours, change the hex values — every `bg-brand-700`, `text-brand-accent`,
+   The values below are the template's default palette. To make the app yours,
+   change the hex values — every `bg-brand-700`, `text-brand-accent`,
    `.sui-btn--primary`, focus ring, chart colour, etc. updates in step.
 
    Token roles:
@@ -16,7 +16,7 @@
      brand-800                primary action hover (light mode)
      brand-accent             primary action + links (dark mode), spotlight ring, logo
      brand-accent-hover       primary action hover (dark mode)
-     brand-wave               the third path of the logo mark
+     brand-wave               secondary accent in the logo mark
      brand-dark               app background (dark mode)
      brand-dark-panel         card / header / dialog surface (dark mode)
      brand-dark-panel-hover   card hover surface (dark mode)

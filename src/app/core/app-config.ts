@@ -18,11 +18,10 @@ export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');
  */
 export const DEFAULT_APP_CONFIG: AppConfig = {
   // TODO(branding): your application name (shown next to the logo).
-  appName: 'Sails Software',
+  appName: 'Employee Portal',
   navItems: [
     { label: 'Dashboard', route: '/dashboard' },
-    { label: 'Data', route: '/data' },
-    { label: 'Analytics', route: '/analytics', adminOnly: true },
-    { label: 'Components', route: '/components' },
+    { label: 'Employees', route: '/employees' },
+    { label: 'Settings', route: '/settings' },
   ],
 };

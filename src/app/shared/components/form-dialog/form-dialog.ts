@@ -37,6 +37,8 @@ export class FormDialog {
   readonly title = input.required<string>();
   readonly confirmLabel = input('Save');
   readonly cancelLabel = input('Cancel');
+  /** Hide the footer Cancel button — e.g. a read-only detail dialog with a single Close action. */
+  readonly showCancel = input(true);
   readonly busy = input(false);
   /** Widen for larger forms, e.g. "w-[90vw] max-w-3xl". */
   readonly widthClass = input('w-full max-w-md');

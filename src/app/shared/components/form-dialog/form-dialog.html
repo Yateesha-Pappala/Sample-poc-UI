@@ -28,9 +28,11 @@
     </div>
 
     <div class="sui-dialog-footer">
-      <button type="button" (click)="close()" class="sui-btn sui-btn--ghost">
-        {{ cancelLabel() }}
-      </button>
+      @if (showCancel()) {
+        <button type="button" (click)="close()" class="sui-btn sui-btn--ghost">
+          {{ cancelLabel() }}
+        </button>
+      }
       <button type="submit" [disabled]="busy()" class="sui-btn sui-btn--primary">
         {{ busy() ? 'Working…' : confirmLabel() }}
       </button>
